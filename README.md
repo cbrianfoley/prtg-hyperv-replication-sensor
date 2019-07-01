@@ -20,5 +20,6 @@ USAGE
         Set the upper and lower limit (LimitMaxError and LimitMaxWarning)
 
 5.	Add a custom EXE Advanced sensor in PRTG
+
 	    Be sure to select the correct script under Sensor Settings -> Exe/Script
 	‘Security Context of probe service’ should work. If not, select 'Use Windows Credentials of parent device' and make sure that account credentials are put in the parent group.
