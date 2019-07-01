@@ -1,31 +1,4 @@
-<#
-.USAGE
-Steps
-1.	Install Hyper-V tools on the server the probe is installed if it isn’t already (elevated powershell command): 
-
-        Install-WindowsFeature -Name RSAT-Hyper-V-Tools –IncludeAllSubFeature
-
-2.	Make the 32 bit version of PowerShell ‘RemoteSigned’ on the server the probe is installed on (elevated powershell command):
-
-	    %SystemRoot%\SysWOW64\WindowsPowerShell\v1.0\powershell.exe "Set-ExecutionPolicy RemoteSigned"
-
-3.	Add service account as a member of the group Hyper-V Administrators on each VMHost 
-    (this might be unnecessary if service account is a domain admin, but I’m not certain)
-
-4.	Update this script and put a copy for each VMHost in the PRTG Network Monitor\Custom Sensors\EXEXML folder.
-
-        Set HVhost to the hostname of one of the VMHost servers. 
-        Set the upper and lower limit (LimitMaxError and LimitMaxWarning)
-
-5.	Add a custom EXE Advanced sensor in PRTG
-	    Be sure to select the correct script under Sensor Settings -> Exe/Script
-	‘Security Context of probe service’ should work. If not, select 'Use Windows Credentials of parent device' and make sure that account credentials are put in the parent group.
-
-#>
-
 $HVhost = "VM-HOST02"
-
-# -----------------------
 
 $CurrentDate = (Get-Date)
 
@@ -37,7 +10,7 @@ $xmlstring = "<?xml version=`"1.0`"?>`n    <prtg>`n"
 
 ForEach ($eachresult IN $Results) {
 
-$TotalMinutes = (New-Timespan –Start $eachresult.LastReplicationTime –End $CurrentDate).TotalMinutes
+$TotalMinutes = (New-Timespan â€“Start $eachresult.LastReplicationTime â€“End $CurrentDate).TotalMinutes
 
 $xmlstring += "    <result>`n"
 $xmlstring += "        <channel>$($eachresult.VMname)</channel>`n"
