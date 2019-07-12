@@ -1,3 +1,7 @@
+<#
+Edit the line below with the hostname of your vmhost
+#>
+
 $HVhost = "VM-HOST02"
 
 $CurrentDate = (Get-Date)
