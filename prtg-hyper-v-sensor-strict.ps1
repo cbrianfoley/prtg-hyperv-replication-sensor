@@ -1,4 +1,6 @@
 ﻿<#
+This script differs from prtg-hyper-v-replication-sensor in that it returns the replication state of ALL vms, not just the ones being replicated
+
 .USAGE
 Steps
 1.	Install Hyper-V tools on the server the probe is installed if it isn’t already (elevated powershell command): 
@@ -23,13 +25,14 @@ Steps
 	    Select 'Use Windows Credentials of parent device' and make sure that account credentials are put in the parent group.
 
 #>
+
+# -----------------------
+
+$HVhost = "VM-HOST01" # EDIT THIS LINE
+
+# -----------------------
+
 $ErrorActionPreference = "SilentlyContinue"
-
-# -----------------------
-
-$HVhost = "VM-HOST01" #EDIT THIS LINE
-
-# -----------------------
 
 #This function returns the replication state of a vm. If replication for this VM is off, it returns nothing(null).
 function Test-Replicationstate ($VMName){
@@ -56,9 +59,9 @@ ForEach ($vm IN $VMs) {
 #this if/else statement runs the vm object against the test-replicationstate function
 #the vm might not be replicated, so test-replicationstate will then return a null value, and $totalminutes becomes 1441 (parsed by prtg as an error)
 #if test-replicationstate returns replication info, it will calculate the time in minutes and set $totalminutes to that
-    IF ($replicationresult -eq $null){
+    if ($replicationresult -eq $null){
         $TotalMinutes = 1441
-    }Else{ $TotalMinutes = (New-Timespan –Start $replicationresult.LastReplicationTime –End $CurrentDate).TotalMinutes
+    } else { $TotalMinutes = (New-Timespan –Start $replicationresult.LastReplicationTime –End $CurrentDate).TotalMinutes
     }
 
     $xmlstring += "    <result>`n"

@@ -1,0 +1,1 @@
+﻿C:\windows\sysnative\windowspowershell\v1.0\powershell.exe -file 'C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\EXEXML\prtg-cluster-replication-sensor.ps1'
